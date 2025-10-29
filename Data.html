@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Payroll Display</title>
+
+<style>
+
+ body{
+
+   font-family:Arial;
+ }
+ .box{
+   background:#05ccf8;
+   width:320px;
+   margin:40px auto;
+   padding:20px;
+
+   border-radius:15px;
+   box-shadow:0 5px 9px rgba(0,0,0,0.3);
+
+}  
+
+ .row{
+
+   display:flex;
+   justify-content:space-between;
+   margin:4px 0;
+ }
+
+ .label{
+   font-weight:bold;
+ 
+}
+
+ h2{
+
+   text-align:center;
+   margin-bottom:15px;
+ 
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="box">
+ <h2>PAYROLL PROGRAM</h2>
+ <div id="results"></div>
+</div>
+
+<script>
+var d = JSON.parse(localStorage.getItem("payroll")||"{}");
+
+var gross = d.rate * d.days;
+var sss = gross * 0.05;
+var pagibig = gross * 0.03;
+var philhealth = gross * 0.02;
+var tax = gross * 0.05;
+var totalDed = sss + pagibig + philhealth + tax;
+var net = gross - totalDed;
+
+function peso(n){ return n.toFixed(2); }
+
+document.getElementById("results").innerHTML =
+  "<div class='row'><span class='label'>ID:</span>"+d.idNumber+"</div>"+
+  "<div class='row'><span class='label'>Name:</span>"+d.lastName+", "+d.firstName+" "+(d.middleName)+"</div>"+
+  "<div class='row'><span class='label'>Position:</span>"+d.position+"</div>"+
+  "<div class='row'><span class='label'>Rate:</span>"+peso(d.rate)+"</div>"+
+  "<div class='row'><span class='label'>Days:</span>"+d.days+"</div>"+
+  "<div class='row'><span class='label'>Gross PAY:</span>"+peso(gross)+"</div>"+
+  "<hr>"+
+  "<div class='row'><span class='label'>SSS (5%):</span>"+peso(sss)+"</div>"+
+  "<div class='row'><span class='label'>Pag-ibig (3%):</span>"+peso(pagibig)+"</div>"+
+  "<div class='row'><span class='label'>PhilHealth (2%):</span>"+peso(philhealth)+"</div>"+
+  "<div class='row'><span class='label'>Tax (5%):</span>"+peso(tax)+"</div>"+
+  "<div class='row'><span class='label'>TOTAL DEDUCTION:</span>"+peso(totalDed)+"</div>"+
+  "<hr>"+
+  "<div class='row'><span class='label'>NET PAY:</span>"+peso(net)+"</div>";
+</script>
+
+</body>
+</html>
